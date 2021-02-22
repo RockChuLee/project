@@ -1,8 +1,12 @@
 package com.imooc.project.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.imooc.project.entity.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableField;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,11 +16,11 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author XXX
- * @since 2021-02-20
+ * @since 2021-02-22
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity {
+@EqualsAndHashCode(callSuper = false)
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +39,5 @@ public class Role extends BaseEntity {
      * 备注
      */
     private String remark;
-
 
 }
