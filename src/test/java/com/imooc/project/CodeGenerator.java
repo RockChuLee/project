@@ -145,7 +145,8 @@ public class CodeGenerator {
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setControllerMappingHyphenStyle(true);
-        strategy.setLogicDeleteFieldName("deleted");//逻辑删除
+        //逻辑删除
+        strategy.setLogicDeleteFieldName("deleted");
         //自动填充
         ArrayList<TableFill> tableFills = new ArrayList<>();
         TableFill createTime = new TableFill("create_time", FieldFill.INSERT);
