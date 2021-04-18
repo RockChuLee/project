@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -46,20 +45,20 @@ public class CodeGenerator {
     }
 
     public static void main(String[] args) {
-        // 代码生成器
+        // 1. 创建一个代码生成器对象
         AutoGenerator mpg = new AutoGenerator();
 
-        // 全局配置
+        // 2. 创建一个全局配置对象
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");//获取用户路径,即项目根目录路径
-        gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("XXX");
+        String projectPath = System.getProperty("user.dir");//获取用户工作目录，即项目根路径
+        gc.setOutputDir(projectPath + "/src/main/java");//设置输出目录
+        gc.setAuthor("XXX");//设置作者名
         gc.setOpen(false);//设置完成后是否打开文件
         gc.setServiceName("%sService");//设置Service类的名字
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
-        mpg.setGlobalConfig(gc);
+        mpg.setGlobalConfig(gc);//全局配置对象设置近代码生产器对象中
 
-        // 数据源配置
+        // 3. 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl("jdbc:mysql://localhost:3306/project?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8");
         // dsc.setSchemaName("public");
@@ -68,13 +67,13 @@ public class CodeGenerator {
         dsc.setPassword("root");
         mpg.setDataSource(dsc);
 
-        // 包配置
+        // 4. 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));//分模块开发使用
         pc.setParent("com.imooc");
         mpg.setPackageInfo(pc);
 
-        // 自定义配置
+        // 5. 自定义配置（自定义参数，或者自定义模板的时候使用）
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
@@ -99,6 +98,7 @@ public class CodeGenerator {
             }
         });
 
+        //是否覆盖或者重新创建，如果不需要覆盖，注释本段
         cfg.setFileCreate(new IFileCreate() {
             @Override
             public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
@@ -116,7 +116,7 @@ public class CodeGenerator {
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 
-        // 配置模板
+        // 6. 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
 
         // 配置自定义输出模板
@@ -125,26 +125,28 @@ public class CodeGenerator {
         // templateConfig.setService();
         // templateConfig.setController();
 
-        templateConfig.setXml(null);
+        templateConfig.setXml(null);//设置为null，不然会覆盖自定义配置
         mpg.setTemplate(templateConfig);
 
-        // 策略配置
+        // 7. 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
+        strategy.setNaming(NamingStrategy.underline_to_camel);//下划线转驼峰
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
+        strategy.setEntityLombokModel(true);//是否使用Lombok模式
+        strategy.setRestControllerStyle(false);//是否是@RestController注解
 
+        //如果输入y继承基类，输入其他的不继承
         if (scanner("是否继承基类").equalsIgnoreCase("y")) {
+            // 公共实体父类
             strategy.setSuperEntityClass("com.imooc.project.entity.BaseEntity");
             // 写于父类中的公共字段
             strategy.setSuperEntityColumns("deleted", "create_time", "modified_time", "create_account_id", "modified_account_id");
         }
-
-        strategy.setEntityLombokModel(true);
-        strategy.setRestControllerStyle(false);
-        // 公共父类
+        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));//手动输入表生成Controller
+        // 公共父类（Controller的公共父类）
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setControllerMappingHyphenStyle(true);
+        strategy.setControllerMappingHyphenStyle(true);//ControllerMapping中是否是驼峰命名风格
+
         //逻辑删除
         strategy.setLogicDeleteFieldName("deleted");
         //自动填充
@@ -159,9 +161,11 @@ public class CodeGenerator {
         tableFills.add(modifiedAccountId);
         strategy.setTableFillList(tableFills);
 
-//        strategy.setTablePrefix(pc.getModuleName() + "_");
+//        strategy.setTablePrefix(pc.getModuleName() + "_");//表命前缀
         mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());//使用的是什么模板引擎
+
+        //执行
         mpg.execute();
     }
 }
