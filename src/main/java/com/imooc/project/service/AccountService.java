@@ -1,5 +1,6 @@
 package com.imooc.project.service;
 
+import com.imooc.project.dto.LoginDTO;
 import com.imooc.project.entity.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AccountService extends IService<Account> {
 
+    LoginDTO login(String username, String password);
 }
