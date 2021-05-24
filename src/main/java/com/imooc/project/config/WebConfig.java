@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+        //使“localhost：8080/”，跳转到login/login.html
         registry.addViewController("/").setViewName("login/login");
     }
 }

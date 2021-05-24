@@ -34,8 +34,10 @@ public class LoginController {
         LoginDTO loginDTO = accountService.login(username, password);
         String error = loginDTO.getError();
         if (error == null) {
+            //添加session
             session.setAttribute("account",loginDTO.getAccount());
         }else {
+            //重定向属性设置
             attributes.addFlashAttribute("error", error);
         }
         return loginDTO.getPath();
