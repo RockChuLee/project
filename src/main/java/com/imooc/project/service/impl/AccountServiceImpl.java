@@ -3,12 +3,10 @@ package com.imooc.project.service.impl;
 import cn.hutool.crypto.digest.MD5;
 import com.imooc.project.dto.LoginDTO;
 import com.imooc.project.entity.Account;
-import com.imooc.project.mapper.AccountMapper;
+import com.imooc.project.dao.AccountMapper;
 import com.imooc.project.service.AccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import java.security.MessageDigest;
 
 /**
  * <p>

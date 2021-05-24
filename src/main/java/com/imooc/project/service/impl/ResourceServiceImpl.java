@@ -1,7 +1,7 @@
 package com.imooc.project.service.impl;
 
 import com.imooc.project.entity.Resource;
-import com.imooc.project.mapper.ResourceMapper;
+import com.imooc.project.dao.ResourceMapper;
 import com.imooc.project.service.ResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

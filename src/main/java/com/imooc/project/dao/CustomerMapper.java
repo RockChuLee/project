@@ -1,4 +1,4 @@
-package com.imooc.project.mapper;
+package com.imooc.project.dao;
 
 import com.imooc.project.entity.Customer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
