@@ -1,12 +1,17 @@
 package com.imooc.project.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.imooc.project.dto.LoginDTO;
 import com.imooc.project.entity.Account;
 import com.imooc.project.dao.AccountMapper;
+import com.imooc.project.entity.Customer;
 import com.imooc.project.service.AccountService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
