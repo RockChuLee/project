@@ -4,6 +4,7 @@ import com.imooc.project.dto.LoginDTO;
 import com.imooc.project.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +42,16 @@ public class LoginController {
             attributes.addFlashAttribute("error", error);
         }
         return loginDTO.getPath();
+    }
+
+    /**
+     *  登出方法
+     * @param session
+     * @return
+     */
+    @GetMapping("logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
     }
 }
