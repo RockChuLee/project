@@ -11,6 +11,7 @@ import com.imooc.project.service.CustomerService;
 import com.imooc.project.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -73,6 +74,7 @@ public class CustomerController {
 
     /**
      * 新增客户
+     *
      * @param customer
      * @return
      */
@@ -80,5 +82,30 @@ public class CustomerController {
     @ResponseBody
     public R<Object> add(@RequestBody Customer customer) {
         return ResultUtil.buildR(customerService.save(customer));
+    }
+
+    /**
+     * 进入修改页
+     *
+     * @return
+     */
+    @GetMapping("/toUpdate/{id}")
+    public String toUpdate(@PathVariable Long id, Model model) {
+//        Customer customer = customerService.getById(id);
+//        model.addAttribute("customer", customer);
+        return "customer/customerUpdate";
+    }
+
+
+    /**
+     * 修改客户
+     *
+     * @param customer
+     * @return
+     */
+    @PutMapping("/update")
+    @ResponseBody
+    public R<Object> update(@RequestBody Customer customer) {
+        return ResultUtil.buildR(customerService.updateById(customer));
     }
 }
