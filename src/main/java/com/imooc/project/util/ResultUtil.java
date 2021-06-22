@@ -24,4 +24,12 @@ public class ResultUtil {
         data.put("records", page.getRecords());
         return R.ok(data);
     }
+
+    public static R<Object> buildR(boolean success) {
+        if (success) {
+            return R.ok(null);
+        } else {
+            return R.failed("操作失败");
+        }
+    }
 }

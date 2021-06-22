@@ -11,9 +11,7 @@ import com.imooc.project.service.CustomerService;
 import com.imooc.project.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -52,7 +50,7 @@ public class CustomerController {
      * @return
      */
 
-    @GetMapping("list")
+    @GetMapping("/list")
     @ResponseBody
     public R<Map<String, Object>> list(String realName, String phone, Long page, Long limit) {
         LambdaQueryWrapper<Customer> queryWrapper = Wrappers.<Customer>lambdaQuery().like(StringUtils.isNotBlank(realName), Customer::getRealName, realName)
@@ -60,5 +58,27 @@ public class CustomerController {
                 .orderByDesc(Customer::getCustomerId);
         Page<Customer> myPage = customerService.page(new Page<>(page, limit), queryWrapper);
         return ResultUtil.buildPageR(myPage);
+    }
+
+    /**
+     * 进入新增页
+     *
+     * @return
+     */
+    @GetMapping("/toAdd")
+    public String toAdd() {
+        return "customer/customerAdd";
+    }
+
+
+    /**
+     * 新增客户
+     * @param customer
+     * @return
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public R<Object> add(@RequestBody Customer customer) {
+        return ResultUtil.buildR(customerService.save(customer));
     }
 }
