@@ -91,8 +91,8 @@ public class CustomerController {
      */
     @GetMapping("/toUpdate/{id}")
     public String toUpdate(@PathVariable Long id, Model model) {
-//        Customer customer = customerService.getById(id);
-//        model.addAttribute("customer", customer);
+        Customer customer = customerService.getById(id);
+        model.addAttribute("customer", customer);
         return "customer/customerUpdate";
     }
 
