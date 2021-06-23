@@ -13,12 +13,12 @@ var tableIns = table.render({
         };
     }
     , cols: [[ //表头
-        {field: 'realName', title: '真实姓名'}
-        , {field: 'sex', title: '性别'}
-        , {field: 'age', title: '年龄'}
-        , {field: 'phone', title: '手机号码'}
-        , {field: 'createTime', title: '创建时间'}
-        , {title: '操作', toolbar: '#barDemo'}
+        {field: 'realName', title: '真实姓名'},
+        {field: 'sex', title: '性别'},
+        {field: 'age', title: '年龄'},
+        {field: 'phone', title: '手机号码'},
+        {field: 'createTime', title: '创建时间'},
+        {title: '操作', toolbar: '#barDemo'}
     ]]
 });
 
@@ -38,7 +38,7 @@ function query() {
 function toAdd() {
     openLayer('/customer/toAdd', '新增客户')
     layui.form.render();
-    mySubmit('addSubmit', 'POST')
+    mySubmit('addSubmit', 'POST');
 }
 
 function openLayer(url, title) {
