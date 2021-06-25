@@ -108,4 +108,28 @@ public class CustomerController {
     public R<Object> update(@RequestBody Customer customer) {
         return ResultUtil.buildR(customerService.updateById(customer));
     }
+
+    /**
+     * 删除客户
+     *
+     * @param
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public R<Object> delete(@PathVariable Long id) {
+        return ResultUtil.buildR(customerService.removeById(id));
+    }
+
+    /**
+     * 进入详情页
+     *
+     * @return
+     */
+    @GetMapping("/toDetail/{id}")
+    public String toDetail(@PathVariable Long id, Model model) {
+        Customer customer = customerService.getById(id);
+        model.addAttribute("customer", customer);
+        return "customer/customerDetail";
+    }
 }

@@ -23,7 +23,7 @@ var tableIns = table.render({
 });
 
 function query() {
-    tabLeIns.reload({
+    tableIns.reload({
         where: { // 设定异步数据接口的额外参数，任意设
             realName: $("#realName"),
             phone: $("#phone")
@@ -41,40 +41,6 @@ function toAdd() {
     mySubmit('addSubmit', 'POST');
 }
 
-function openLayer(url, title) {
-    $.ajaxSettings.async = true;
-    $.get(url, function (res) {
-        layer.open({
-            type: 1,
-            title: title,
-            area: ['800px', '450px'],
-            content: res
-        });
-    });
-    $.ajaxSettings.async = false;
-}
-
-function mySubmit(filter, type) {
-    layui.form.on('submit(' + filter + ')', function (data) {
-        $.ajax({
-            url: data.form.action,
-            async: false,
-            type: type,
-            contentType: 'application/json;charset=utf-8',
-            data: JSON.stringify(data.field),
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.closeAll();
-                    query();
-                } else {
-                    layer.alert(res.msg)
-                }
-            }
-        });
-        return false;
-    });
-}
-
 //工具条事件
 table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
     var data = obj.data; //获得当前行数据
@@ -84,10 +50,10 @@ table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，tes
     let customerId = data.customerId;
 
     if (layEvent === 'detail') { //查看
-        //do somehing
+        openLayer('/customer/toDetail/' + customerId, '客户详情')
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
-            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+            myDelete("/customer/" + customerId)
             layer.close(index);
             //向服务端发送删除指令
         });
